@@ -121,7 +121,7 @@ class ViewImages extends React.Component{
                                 <div id="listImg">
                                     <p class="container" id="viewName">{list.commonName}</p>
                                     <button onClick={this.viewPicture.bind(this, list.imageURL, list.commonName, list.id)} title="View Photo" id="viewButton" class="btn btn-light">View</button>
-                                    <button onClick={this.handleClickDeletePhoto.bind(this, list.id)} title="Delete Photo" id="deleteButton" class="btn btn-light">Delete</button>
+                                    <button onClick={this.handleClickDeletePhoto.bind(this, list.id)} title="Delete Photo" id="deleteButton" class="btn btn-light"><i class="fas fa-trash-alt"></i></button>
                                     <img class="img align-bottom" onError={this.onError.bind(this)} src={list.imageURL} alt="Card image cap"></img>
                                 </div>
                             </li>

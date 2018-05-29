@@ -62,7 +62,7 @@ class DeletePhoto extends React.Component {
             }.bind(this));
         }
         else {
-            this.setState({status:"Auth ID should not be blank"});
+            this.setState({status:"Please enter Auth-ID"});
         }
 
     }

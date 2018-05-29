@@ -45,11 +45,11 @@ class AddPhoto extends React.Component {
 
     handleSubmit(){
         if(this.state.imageURL == ''){
-            this.setState({status:"ImageURL should not be blank"})
+            this.setState({status:"Please enter ImageURL"})
         }
 
         if(this.state.commonName == ''){
-            this.setState({status:"Name should not be blank"})
+            this.setState({status:"Please enter Name"})
         }
 
         if(this.state.imageURL != '' && this.state.commonName != ''){
