@@ -25,53 +25,73 @@ class AddPhoto extends React.Component {
     }
     handleChangeName(e) {
         this.setState({commonName: e.target.value});
+        e.preventDefault();
     }
+
     handleChangeScientificName(e){
         this.setState({scientificName: e.target.value});
+        e.preventDefault();
     }
+
     handleChangefamily(e){
         this.setState({family: e.target.value});
+        e.preventDefault();
     }
+
     handleChangeURL(e){
         this.setState({imageURL: e.target.value});
+        e.preventDefault();
     }
-    handleSubmit(e){
-        let input = {
-            'commonName': this.state.commonName,
-            'scientificName': this.state.scientificName,
-            'family': this.state.family,
-            'imageURL': this.state.imageURL
-        };
 
-        let formBody = [];
-        for (let property in input) {
-            let encodedKey = encodeURIComponent(property);
-            let encodedValue = encodeURIComponent(input[property]);
-            formBody.push(encodedKey + "=" + encodedValue);
+    handleSubmit(){
+        if(this.state.imageURL == ''){
+            this.setState({status:"ImageURL should not be blank"})
         }
-        formBody = formBody.join("&");
 
-        fetch(this.state.pageCreate, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            },
-            body: formBody
-        }).then(function(result){
-            return result.json();
-        }).then(function(response){
-            if (response.status === 'OK'){
-                this.setState({status:"Image successfully added. Please Refresh the page."})
+        if(this.state.commonName == ''){
+            this.setState({status:"Name should not be blank"})
+        }
+
+        if(this.state.imageURL != '' && this.state.commonName != ''){
+            let input = {
+                'commonName': this.state.commonName,
+                'scientificName': this.state.scientificName,
+                'family': this.state.family,
+                'imageURL': this.state.imageURL
+            };
+
+            let formBody = [];
+            for (let property in input) {
+                let encodedKey = encodeURIComponent(property);
+                let encodedValue = encodeURIComponent(input[property]);
+                formBody.push(encodedKey + "=" + encodedValue);
             }
-            else {
-                this.setState({status: response.status})
-            }
-        }.bind(this)).catch(function(error){
-            this.setState({status: "Upload unsuccessful." +
-                "\nLink might be broken, removed or expired." +
-                "\nCheck if the link is working properly and try again"})
-        }.bind(this));
+            formBody = formBody.join("&");
+
+            fetch(this.state.pageCreate, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+                },
+                body: formBody
+            }).then(function(result){
+                return result.json();
+            }).then(function(response){
+                if (response.status === 'OK'){
+                    this.setState({status:"Image successfully added. Please Refresh the page."})
+                }
+                else {
+                    this.setState({status:response.status})
+                }
+            }.bind(this)).catch(function(error){
+                this.setState({status: "Upload unsuccessful." +
+                    "\nLink might be broken, removed or expired." +
+                    "\nCheck if the link is working properly and try again"})
+
+            }.bind(this));
+        }
     }
+
 
     render(){
         return(
@@ -97,7 +117,7 @@ class AddPhoto extends React.Component {
                         <input type="text" class="form-control" onChange={this.handleChangeURL}  placeholder="Enter a valid image URL here" required></input>
                     </div>
                     <div class="text-center">
-                        <button type="submit" onClick={this.handleSubmit} class="btn btn-primary">Add</button>
+                        <a href="#" role="button" onClick={this.handleSubmit} class="btn btn-primary">Add</a>
                     </div>
                 </form>
                 <br/>

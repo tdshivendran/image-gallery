@@ -12,49 +12,59 @@ class DeletePhoto extends React.Component {
         this.handleDelete=this.handleDelete.bind(this);
         this.state={
             imgID: props.ID,
+            AuthID: '',
             pageDelete:'',
             status:''
         }
     }
 
     handleChangeID(e) {
-        this.setState({pageDelete:api.url+'/Animal/Delete?CandidateID='+e.target.value})
+        this.setState({pageDelete:api.url+'/Animal/Delete?CandidateID='+e.target.value});
+        this.setState({AuthID:e.target.value});
+        e.preventDefault();
     }
 
     handleDelete() {
-        let input = {
-            'ID': this.state.imgID
-        };
+        if(this.state.AuthID != '') {
 
-        let formBody = [];
-        for (let property in input) {
-            let encodedKey = encodeURIComponent(property);
-            let encodedValue = encodeURIComponent(input[property]);
-            formBody.push(encodedKey + "=" + encodedValue);
+            let input = {
+                'ID': this.state.imgID
+            };
+
+            let formBody = [];
+            for (let property in input) {
+                let encodedKey = encodeURIComponent(property);
+                let encodedValue = encodeURIComponent(input[property]);
+                formBody.push(encodedKey + "=" + encodedValue);
+            }
+            formBody = formBody.join("&");
+
+
+            fetch(this.state.pageDelete, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+                },
+                body: formBody
+            }).then(function(result){
+                return result.json();
+            }).then(function(response){
+                if (response.status === 'OK'){
+                    this.setState({status:"Delete Successful. Please Refresh the page."})
+                }
+                else {
+                    this.setState({status: response.status})
+                }
+            }.bind(this)).catch(function(error){
+                this.setState({status: "Delete unsuccessful." +
+                    "\nLink might be broken, removed or expired." +
+                    "\nCheck if the link is working properly and try again"})
+            }.bind(this));
         }
-        formBody = formBody.join("&");
+        else {
+            this.setState({status:"Auth ID should not be blank"});
+        }
 
-
-        fetch(this.state.pageDelete, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            },
-            body: formBody
-        }).then(function(result){
-            return result.json();
-        }).then(function(response){
-            if (response.status === 'OK'){
-                this.setState({status:"Delete Successful. Please Refresh the page."})
-            }
-            else {
-                this.setState({status: response.status})
-            }
-        }.bind(this)).catch(function(error){
-            this.setState({status: "Delete unsuccessful." +
-                "\nLink might be broken, removed or expired." +
-                "\nCheck if the link is working properly and try again"})
-        }.bind(this));
     }
 
     render(){
@@ -68,12 +78,12 @@ class DeletePhoto extends React.Component {
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Auth-ID</label>
                         <div class="col-sm-10">
-                            <input onChange={this.handleChangeID} class="form-control" placeholder="Authentication ID"></input>
+                            <input onChange={this.handleChangeID} class="form-control" placeholder="Authentication ID" required></input>
                         </div>
                     </div>
                     <br/>
                     <div class="text-center">
-                        <button type="submit" onClick={this.handleDelete} class="btn btn-primary">Delete</button>
+                        <a href="#" role="button" onClick={this.handleDelete} class="btn btn-primary">Delete</a>
                     </div>
                 </form>
                 <br/>

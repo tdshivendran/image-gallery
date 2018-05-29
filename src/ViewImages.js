@@ -1,5 +1,6 @@
 import React from "react";
 import DeletePhoto from "./DeletePhoto";
+import AddPhoto from "./AddPhoto";
 
 let api = {
     url: 'https://animalrestapi.azurewebsites.net',
@@ -85,6 +86,13 @@ class ViewImages extends React.Component{
                     {/*</div>*/}
                 </div>
             )
+        }
+        if (this.props.items === "Add Photo"){
+            return(
+                <div>
+                    <AddPhoto/>
+                </div>
+            );
         }
         else {
             let searchImages = this.props.items.filter(

@@ -1,6 +1,7 @@
 import React from 'react';
 import FetchContent from './FetchContent';
 import AddPhoto from "./AddPhoto";
+import ViewImages from "./ViewImages";
 
 class MainPage extends React.Component {
     constructor(props){
@@ -23,7 +24,7 @@ class MainPage extends React.Component {
                 <div id="overlayContainer" class="container">
                     <button class="closeButton" onClick={this.onClickCloseOverlay}>&times;</button>
                     <div class="overlayContent">
-                        <AddPhoto/>
+                        <ViewImages items="Add Photo"/>
                     </div>
                 </div>
             </div>
