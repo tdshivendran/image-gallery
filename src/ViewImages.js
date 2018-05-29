@@ -1,5 +1,5 @@
 import React from "react";
-import AddPhoto from "./AddPhoto";
+import DeletePhoto from "./DeletePhoto";
 
 let api = {
     url: 'https://animalrestapi.azurewebsites.net',
@@ -11,13 +11,18 @@ class ViewImages extends React.Component{
         super(props);
         this.onClickCloseOverlay=this.onClickCloseOverlay.bind(this);
         this.handleClickDeletePhoto=this.handleClickDeletePhoto.bind(this);
+        this.handleChangeSearch=this.handleChangeSearch.bind(this);
         this.viewPicture=this.viewPicture.bind(this);
         this.state={
             items: '',
             listItems: '',
             showOverlay: '',
-            pageDelete: api.url+'/Animal/Delete?CandidateID='+api.ID,
+            search: '',
         };
+    }
+
+    handleChangeSearch(e) {
+        this.setState({search:e.target.value.substr(0,20)});
     }
 
     onError(e) {
@@ -30,43 +35,17 @@ class ViewImages extends React.Component{
     }
 
     handleClickDeletePhoto(id){
-        let input = {
-            'ID': id,
-        };
-
-        let formBody = [];
-        for (let property in input) {
-            let encodedKey = encodeURIComponent(property);
-            let encodedValue = encodeURIComponent(input[property]);
-            formBody.push(encodedKey + "=" + encodedValue);
-        }
-        formBody = formBody.join("&");
-
-
-        fetch(this.state.pageDelete, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            },
-            body: formBody
-        }).then(function(result){
-            return result.json();
-        }).then(function(response){
-            console.log(response.status);
-            if (response.status === 'OK'){
-                alert("Delete Successful");
-            }
-            else {
-                alert("Delete unsuccessful at the server" +
-                    "\nPossible Cause: Authentication Error" +
-                    "\nFix: Check if the user authentication information is changed or removed" +
-                    "\nPossible Cause: Image ID not found")
-            }
-        }).catch(function (error) {
-            alert("Delete unsuccessful" +
-                "\nPossible Cause: Link might be broken, removed or expired" +
-                "\nFix: Check if the link is working properly and try again");
-        });
+        this.setState({showOverlay: [
+                <div id="DeletePhotoOverlay">
+                    <div onClick={this.onClickCloseOverlay} class="overlay"></div>
+                    <div id="overlayContainer" class="container">
+                        <button class="closeButton" onClick={this.onClickCloseOverlay}>&times;</button>
+                        <div class="overlayContent">
+                            <DeletePhoto ID={id}/>
+                        </div>
+                    </div>
+                </div>
+            ]});
     }
 
     viewPicture(src,name,id) {
@@ -93,23 +72,43 @@ class ViewImages extends React.Component{
         if (this.props.items === '') {
             return(
                 <div>
-
-                </div>
-            )
-        }
-        if (this.props.items === 'AddPhoto') {
-            return(
-                <div>
-                    <AddPhoto/>
+                    {/*<div class="container text-center">*/}
+                        {/*<h1>Error Loading the page</h1>*/}
+                        {/*<p>To know more contact Admin</p>*/}
+                        {/*<div class=" position-sticky input-group input-group-lg mb-3 d-flex justify-content-center">*/}
+                            {/*<div class="input-group-append">*/}
+                                {/*<a href="https://tdshivendran.github.io/aboutme/" target="_blank" class="btn btn-outline-secondary" type="button">*/}
+                                    {/*Admin*/}
+                                {/*</a>*/}
+                            {/*</div>*/}
+                        {/*</div>*/}
+                    {/*</div>*/}
                 </div>
             )
         }
         else {
+            let searchImages = this.props.items.filter(
+                (image) => {
+                    return image.commonName.toLowerCase().indexOf(this.state.search.toLowerCase()) != -1;
+                }
+            );
             return (
                 <div>
                     {this.state.showOverlay}
+                    <div class="container text-center">
+                        <h1>Simple Image Gallery</h1>
+                        <p>A simple gallery to view and share pictures online</p>
+                        <div class=" position-sticky input-group input-group-lg mb-3 d-flex justify-content-center">
+                            <input  type="text" onChange={this.handleChangeSearch} class="form-control" placeholder="Search Images..." id="searchBox"></input>
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" id="searchButton">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                     <ul class="row">
-                        {this.props.items.reverse().map(list => (
+                        {searchImages.reverse().map(list => (
                             <li key={list.id} class="col-lg-3 col-md-4 col-sm-6 col-12 text-center inline" id="grid">
                                 <div id="listImg">
                                     <p class="container" id="viewName">{list.commonName}</p>
@@ -120,6 +119,10 @@ class ViewImages extends React.Component{
                             </li>
                         ))}
                     </ul>
+                    <br/>
+                    <div class="container text-center">
+                        <p>To know more about this website, <a href="https://tdshivendran.github.io/aboutme/" target="_blank">contact developer</a></p>
+                    </div>
                 </div>
             );
         }

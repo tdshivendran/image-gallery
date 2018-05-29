@@ -36,12 +36,6 @@ class AddPhoto extends React.Component {
         this.setState({imageURL: e.target.value});
     }
     handleSubmit(e){
-        console.log(this.state.commonName);
-        console.log(this.state.scientificName);
-        console.log(this.state.family);
-        console.log(this.state.imageURL);
-
-        let upload = 0;
         let input = {
             'commonName': this.state.commonName,
             'scientificName': this.state.scientificName,
@@ -66,30 +60,28 @@ class AddPhoto extends React.Component {
         }).then(function(result){
             return result.json();
         }).then(function(response){
-            console.log(response.status);
             if (response.status === 'OK'){
-                alert("Submit Successful");
+                this.setState({status:"Image successfully added. Please Refresh the page."})
             }
             else {
-                alert("Submit unsuccessful at the server" +
-                    "\nPossible Cause: Authentication Error" +
-                    "\nFix: Check if the user authentication information is changed or removed")
+                this.setState({status: response.status})
             }
-        }).catch(function (error) {
-            alert("Submit unsuccessful" +
-                "\nPossible Cause: Link might be broken, removed or expired" +
-                "\nFix: Check if the link is working properly and try again");
-        });
+        }.bind(this)).catch(function(error){
+            this.setState({status: "Upload unsuccessful." +
+                "\nLink might be broken, removed or expired." +
+                "\nCheck if the link is working properly and try again"})
+        }.bind(this));
     }
 
     render(){
         return(
             <div>
+                <h2 class="text-center">Add images of the animals using URL's</h2>
                 <form>
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label>Name *</label>
-                            <input type="text" class="form-control" onChange={this.handleChangeName} placeholder="Name of the animal. Ex: Cat, Dog, etc." required></input>
+                            <input type="text" class="form-control" onChange={this.handleChangeName} placeholder="Ex: Cat, Dog, etc." required></input>
                         </div>
                         <div class="form-group col-md-4">
                             <label>Scientific Name</label>
@@ -97,7 +89,7 @@ class AddPhoto extends React.Component {
                         </div>
                         <div class="form-group col-md-4">
                             <label>Family</label>
-                            <input type="text" class="form-control" onChange={this.handleChangefamily}  placeholder="Family of the animal. Ex: Domestic, Wild, etc."></input>
+                            <input type="text" class="form-control" onChange={this.handleChangefamily}  placeholder="Ex: Domestic, Wild, etc."></input>
                         </div>
                     </div>
                     <div class="form-group">
@@ -108,7 +100,8 @@ class AddPhoto extends React.Component {
                         <button type="submit" onClick={this.handleSubmit} class="btn btn-primary">Add</button>
                     </div>
                 </form>
-                {this.state.status}
+                <br/>
+                <p class="text-center text-muted">{this.state.status}</p>
             </div>
         );
     }
