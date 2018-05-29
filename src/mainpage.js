@@ -1,6 +1,7 @@
 import React from 'react';
 import FetchContent from './FetchContent';
 import AddPhoto from './AddPhoto';
+import ViewImages from "./ViewImages";
 
 let api = {
     url: 'https://animalrestapi.azurewebsites.net',
@@ -11,10 +12,8 @@ class MainPage extends React.Component {
     constructor(props){
         super(props);
         this.handleClickAddPhoto=this.handleClickAddPhoto.bind(this);
-        this.handleClickDeletePhoto=this.handleClickDeletePhoto.bind(this);
         this.onClickCloseOverlay=this.onClickCloseOverlay.bind(this);
         this.state = {
-            pageDelete: api.url+'/Animal/Delete?CandidateID='+api.ID,
             uploadstatus:'',
             showOverlay: ''
         };
@@ -32,50 +31,11 @@ class MainPage extends React.Component {
                     <button class="closeButton" onClick={this.onClickCloseOverlay}>&times;</button>
                     <div class="overlayContent">
                         <h2 class="text-center">Add images of the animals using URL's</h2>
-                        <AddPhoto/>
+                        <ViewImages items='AddPhoto'/>
                     </div>
                 </div>
             </div>
             ]});
-    }
-
-    handleClickDeletePhoto(){
-        let input = {
-            'ID': '',
-        };
-
-        let formBody = [];
-        for (let property in input) {
-            let encodedKey = encodeURIComponent(property);
-            let encodedValue = encodeURIComponent(input[property]);
-            formBody.push(encodedKey + "=" + encodedValue);
-        }
-        formBody = formBody.join("&");
-
-
-        fetch(this.state.pageDelete, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            },
-            body: formBody
-        }).then(function(result){
-            return result.json();
-        }).then(function(response){
-            console.log(response.status);
-            if (response.status === 'OK'){
-                alert("Delete Successful");
-            }
-            else {
-                alert("Delete unsuccessful at the server" +
-                    "\nPossible Cause: Authentication Error" +
-                    "\nFix: Check if the user authentication information is changed or removed")
-            }
-        }).catch(function (error) {
-            alert("Delete unsuccessful" +
-                "\nPossible Cause: Link might be broken, removed or expired" +
-                "\nFix: Check if the link is working properly and try again");
-        });
     }
 
     render() {

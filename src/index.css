@@ -13,11 +13,16 @@ body {
 }
 
 ul{
-  list-style: none;
+    list-style: none;
 }
 
 li {
-  padding-top: 1rem;
+    padding-top: 1rem;
+}
+
+#grid {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
 }
 
 .img {
@@ -26,8 +31,8 @@ li {
     height: 18rem;
     opacity: 1;
     border: 0.8px solid;
-    border-color: #28a745;
-    border-radius: 0.5rem;
+    border-color: black;
+    border-radius: 0.25rem;
     transition: opacity 0.5s ease;
 }
 
@@ -65,21 +70,24 @@ li {
 
 #listImg {
     position: relative;
+    background: black;
+    border-radius: 0.25rem;
     width: 100%;
     height: 100%;
 }
 
 #viewName {
+    font-family: 'Nunito', sans-serif;
     position: absolute;
-    background: rgba(255,255,255,0.8);
-    font-size: 2rem;
+    background: rgba(255,255,255,0.7);
+    font-size: 1.8rem;
     text-transform: capitalize;
     top: 0;
     left: 50%;
     transform: translate(-50%, 0%);
     -ms-transform: translate(50%, 0%);
-    border-top-left-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
     text-align: center;
     z-index: -1;
 }
@@ -87,17 +95,32 @@ li {
 #viewButton {
     position: absolute;
     top: 95%;
-    left: 50%;
-    transform: translate(-50%, -95%);
-    -ms-transform: translate(-50%, -95%);
+    left: 10%;
+    background: rgba(248,249,250,0.8);
+    transform: translate(-10%, -95%);
+    -ms-transform: translate(-10%, -95%);
+    z-index: -1;
+}
+
+#deleteButton {
+    position: absolute;
+    top: 95%;
+    left: 90%;
+    background: rgba(248,249,250,0.8);
+    transform: translate(-90%, -95%);
+    -ms-transform: translate(-90%, -95%);
     z-index: -1;
 }
 
 #listImg:hover .img{
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 #listImg:hover #viewButton{
+    z-index: 1;
+}
+
+#listImg:hover #deleteButton{
     z-index: 1;
 }
 
@@ -121,7 +144,7 @@ a img {
     min-height:100%;
     top:0;
     left:0;
-    background:rgba(0,0,0,0.5);
+    background:rgba(0,0,0,0.7);
     overflow: hidden;
     z-index: 2;
 }
@@ -144,32 +167,50 @@ a img {
   padding: 2rem 0 2rem 0;
 }
 
-.closeButton {
-  font-size: 1.5rem;
-  position: absolute;
-  right: 0;
-  border: none;
-  background-color: transparent;
-}
-
-.closeButton:hover, .closeButton:active {
-  color:#fff;
-  background:#009688;
-  text-decoration: none;
-}
-
 .imageWrap {
   padding:1rem 0 1rem 0;
   margin: 0 2rem 0 2rem;
   z-index: 1;
 }
 
+#viewPicture {
+    color: white;
+}
+
+.closeButton {
+    font-size: 2rem;
+    position: absolute;
+    right: 0;
+    border: none;
+    background-color: transparent;
+}
+
+.closeButton:hover, .closeButton:active, .closeButton:focus {
+    color: #28a745;
+    text-decoration: none;
+    border: none;
+}
+
+#viewPicture .closeButton {
+    color: white;
+}
+
+#viewPicture .closeButton:hover,#viewPicture .closeButton:active {
+    color: #28a745;
+    text-decoration: none;
+}
+
 #viewPicture #overlayContainer {
     max-width: 800px;
+    background: none;
 }
 
 #viewPicture h3 {
     text-transform: capitalize;
+}
+
+#viewPicture .overlayContent {
+    padding: 1rem 0 1rem 0;
 }
 
 #viewPictureWrap {
@@ -182,9 +223,12 @@ a img {
 
 #viewPictureWrap .img-fluid {
     max-height: 500px;
+    background-color: #ddd;
 }
 
-
+.mutedText {
+    font-size: 0.8rem;
+}
 
 
 
