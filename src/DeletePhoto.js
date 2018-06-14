@@ -1,10 +1,5 @@
 import React from "react";
 
-let api = {
-    url: 'https://animalrestapi.azurewebsites.net',
-    ID: 'b239ca06-2015-4ae6-82ac-0875cdb4c919'
-};
-
 class DeletePhoto extends React.Component {
     constructor(props) {
         super(props);
@@ -13,19 +8,17 @@ class DeletePhoto extends React.Component {
         this.state={
             imgID: props.ID,
             AuthID: '',
-            pageDelete:'',
             status:''
         }
     }
 
     handleChangeID(e) {
-        this.setState({pageDelete:api.url+'/Animal/Delete?CandidateID='+e.target.value});
         this.setState({AuthID:e.target.value});
         e.preventDefault();
     }
 
     handleDelete() {
-        if(this.state.AuthID != '') {
+        if(this.state.AuthID !== '') {
 
             let input = {
                 'ID': this.state.imgID
@@ -39,8 +32,8 @@ class DeletePhoto extends React.Component {
             }
             formBody = formBody.join("&");
 
-
-            fetch(this.state.pageDelete, {
+            let deleteURL = process.env.REACT_APP_API_URL + "Animal/Delete?CandidateID=" + this.state.AuthID;
+            fetch(deleteURL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -74,18 +67,16 @@ class DeletePhoto extends React.Component {
                 <p class="text-center">Only authenticated users are able to perform delete action.</p>
                 <p class="text-center text-muted">Contact admin to become an authenticated user</p>
                 <p class="text-center">Please enter the Authentication ID if you are a authenticated user.</p>
-                <form>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Auth-ID</label>
-                        <div class="col-sm-10">
-                            <input onChange={this.handleChangeID} class="form-control" placeholder="Authentication ID" required></input>
-                        </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Auth-ID</label>
+                    <div class="col-sm-10">
+                        <input onChange={this.handleChangeID} class="form-control" placeholder="Authentication ID" required></input>
                     </div>
-                    <br/>
-                    <div class="text-center">
-                        <a href="#" role="button" onClick={this.handleDelete} class="btn btn-primary">Delete</a>
-                    </div>
-                </form>
+                </div>
+                <br/>
+                <div class="text-center">
+                    <button onClick={this.handleDelete} class="btn btn-primary">Delete</button>
+                </div>
                 <br/>
                 <p class="text-center text-muted">{this.state.status}</p>
             </div>

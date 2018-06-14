@@ -6,13 +6,13 @@ class FetchContent extends React.Component{
         super(props);
         this.componentDidMount=this.componentDidMount.bind(this);
         this.state={
-            url:'https://animalrestapi.azurewebsites.net/Animal/List?candidateID=b239ca06-2015-4ae6-82ac-0875cdb4c919',
             status:'',
             items:''
         }
     }
     componentDidMount(){
-        fetch(this.state.url).then(function(res){
+        let url = process.env.REACT_APP_API_URL + "Animal/List?candidateID=" + process.env.REACT_APP_API_ID
+        fetch(url).then(function(res){
             return res.json();
         }).then(function (data) {
             this.setState(
@@ -33,3 +33,4 @@ class FetchContent extends React.Component{
 }
 
 export default FetchContent;
+

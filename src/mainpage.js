@@ -1,6 +1,5 @@
 import React from 'react';
 import FetchContent from './FetchContent';
-import AddPhoto from "./AddPhoto";
 import ViewImages from "./ViewImages";
 
 class MainPage extends React.Component {
@@ -36,7 +35,7 @@ class MainPage extends React.Component {
         return (
             <div>
                 <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
-                    <a class="navbar-brand" id="Nav-link" href="#">Image Gallery
+                    <a class="navbar-brand" id="Nav-link" href={process.env.PUBLIC_URL}>Image Gallery
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -45,7 +44,7 @@ class MainPage extends React.Component {
 
                         <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
                             <button id="submitPhoto" onClick={this.handleClickAddPhoto} class="btn btn-outline-success" type="button">Add Photo</button>
-                            <a href="https://tdshivendran.github.io/aboutme/" target="_blank" id="aboutButton" class="btn btn-outline-secondary" role="button">About Developer</a>
+                            <a href="https://tdshivendran.github.io/aboutme/" target="_blank" id="aboutButton" class="btn btn-outline-secondary" role="button" rel="noopener noreferrer">About Developer</a>
                         </ul>
                     </div>
                 </nav>

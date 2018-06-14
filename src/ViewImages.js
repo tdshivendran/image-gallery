@@ -2,11 +2,6 @@ import React from "react";
 import DeletePhoto from "./DeletePhoto";
 import AddPhoto from "./AddPhoto";
 
-let api = {
-    url: 'https://animalrestapi.azurewebsites.net',
-    ID: 'b239ca06-2015-4ae6-82ac-0875cdb4c919'
-};
-
 class ViewImages extends React.Component{
     constructor(props){
         super(props);
@@ -61,7 +56,7 @@ class ViewImages extends React.Component{
                             </label>
                             <button class="closeButton" onClick={this.onClickCloseOverlay}>&times;</button>
                             <div id="viewPictureWrap" class="container">
-                                <img class="img-fluid" onError={this.onError.bind(this)} src={src} alt="Card image cap"></img>
+                                <img class="img-fluid" onError={this.onError.bind(this)} src={src} alt="Card image cap"/>
                             </div>
                         </div>
                     </div>
@@ -96,8 +91,8 @@ class ViewImages extends React.Component{
         }
         else {
             let searchImages = this.props.items.filter(
-                (image) => {
-                    return image.commonName.toLowerCase().indexOf(this.state.search.toLowerCase()) != -1;
+                (imagelist) => {
+                    return imagelist.commonName.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
                 }
             );
             return (
@@ -129,7 +124,7 @@ class ViewImages extends React.Component{
                     </ul>
                     <br/>
                     <div class="container text-center">
-                        <p>To know more about this website, <a href="https://tdshivendran.github.io/aboutme/" target="_blank">contact developer</a></p>
+                        <p>To know more about this website, <a href="https://tdshivendran.github.io/aboutme/" target="_blank" rel="noopener noreferrer">contact developer</a></p>
                     </div>
                 </div>
             );

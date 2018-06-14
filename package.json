@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "http://tdshivendran.github.io/image-gallery",
   "dependencies": {
+    "dotenv": "^6.0.0",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-images": "^0.5.17",
@@ -16,5 +17,8 @@
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
+  },
+  "devDependencies": {
+    "gh-pages": "^1.2.0"
   }
 }
