@@ -1,39 +1,39 @@
 import React from 'react';
-import FetchContent from './FetchContent';
 import ViewImages from "./ViewImages";
+import AddPhoto from "./AddPhoto";
 
-class MainPage extends React.Component {
+class Navbar extends React.Component{
     constructor(props){
         super(props);
         this.handleClickAddPhoto=this.handleClickAddPhoto.bind(this);
-        this.onClickCloseOverlay=this.onClickCloseOverlay.bind(this);
+        this.onClickCloseOverlay=this.onClickCloseOverlay.bind(this)
         this.state = {
             showOverlay: ''
         };
+    }
+
+    handleClickAddPhoto(){
+        this.setState({showOverlay: [
+                <div>
+                    <div onClick={this.onClickCloseOverlay} class="overlay"></div>
+                    <div id="overlayContainer" class="container">
+                        <button class="closeButton" onClick={this.onClickCloseOverlay}>&times;</button>
+                        <div class="overlayContent">
+                            <AddPhoto/>
+                            <ViewImages update="Add Photo"/>
+                        </div>
+                    </div>
+                </div>
+            ]});
     }
 
     onClickCloseOverlay(){
         this.setState({showOverlay: ''});
     }
 
-    handleClickAddPhoto(){
-        this.setState({showOverlay: [
-            <div>
-                <div onClick={this.onClickCloseOverlay} class="overlay"></div>
-                <div id="overlayContainer" class="container">
-                    <button class="closeButton" onClick={this.onClickCloseOverlay}>&times;</button>
-                    <div class="overlayContent">
-                        <ViewImages items="Add Photo"/>
-                    </div>
-                </div>
-            </div>
-            ]});
-    }
-
-
-    render() {
-        return (
-            <div>
+    render(){
+        return(
+            <span>
                 <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
                     <a class="navbar-brand" id="Nav-link" href={process.env.PUBLIC_URL}>Image Gallery
                     </a>
@@ -48,10 +48,20 @@ class MainPage extends React.Component {
                         </ul>
                     </div>
                 </nav>
+                {this.state.showOverlay}
+            </span>
+        );
+    }
+}
+
+class MainPage extends React.Component {
+     render() {
+        return (
+            <div>
                 <div>
-                    {this.state.showOverlay}
-                    <div class="imageWrap">
-                        <FetchContent/>
+                    <Navbar/>
+                    <div>
+                        <ViewImages/>
                     </div>
                 </div>
             </div>

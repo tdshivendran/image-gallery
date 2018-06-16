@@ -1,6 +1,6 @@
 import React from "react";
 import DeletePhoto from "./DeletePhoto";
-import AddPhoto from "./AddPhoto";
+import FetchContent from "./FetchContent";
 
 class ViewImages extends React.Component{
     constructor(props){
@@ -11,7 +11,7 @@ class ViewImages extends React.Component{
         this.viewPicture=this.viewPicture.bind(this);
         this.state={
             items: '',
-            listItems: '',
+            status: 'Loading..',
             showOverlay: '',
             search: '',
         };
@@ -56,7 +56,7 @@ class ViewImages extends React.Component{
                             </label>
                             <button class="closeButton" onClick={this.onClickCloseOverlay}>&times;</button>
                             <div id="viewPictureWrap" class="container">
-                                <img class="img-fluid" onError={this.onError.bind(this)} src={src} alt="Card image cap"/>
+                                <img class="img-fluid" onError={this.onError.bind(this)} src={src} alt={"Image "+name+" is unavailable"}></img>
                             </div>
                         </div>
                     </div>
@@ -64,39 +64,67 @@ class ViewImages extends React.Component{
             ]});
     }
 
+    componentDidMount(){
+        let data=FetchContent();
+        data.then(function(data) {
+            if(data !== 'error'){
+                if(data.status === 'OK'){
+                    this.setState({items:data.list, status:data.status});
+                }
+                if(data.status !== 'OK'){
+                    this.setState({status:data.status});
+                }
+            }
+            else{
+                this.setState({status: "Cannot load data." +
+                    "\nLink might be broken, removed or expired." +
+                    "\nCheck if the link is working properly and try again"});
+            }
+        }.bind(this));
+    }
+
     render(){
-        if (this.props.items === '') {
+        if (this.props.update === "Add Photo"){
             return(
                 <div>
-                    {/*<div class="container text-center">*/}
-                        {/*<h1>Error Loading the page</h1>*/}
-                        {/*<p>To know more contact Admin</p>*/}
-                        {/*<div class=" position-sticky input-group input-group-lg mb-3 d-flex justify-content-center">*/}
-                            {/*<div class="input-group-append">*/}
-                                {/*<a href="https://tdshivendran.github.io/aboutme/" target="_blank" class="btn btn-outline-secondary" type="button">*/}
-                                    {/*Admin*/}
-                                {/*</a>*/}
-                            {/*</div>*/}
-                        {/*</div>*/}
-                    {/*</div>*/}
-                </div>
-            )
-        }
-        if (this.props.items === "Add Photo"){
-            return(
-                <div>
-                    <AddPhoto/>
+
                 </div>
             );
         }
+        if (this.state.status ==='Loading..') {
+            return(
+                <div class="main">
+                    <div class="text-center">
+                        <i id="loadingSpinner" class="fas fa-spinner fa-spin"></i>
+                        <p>Loading...</p>
+                    </div>
+                </div>
+            );
+        }
+        if (this.state.items === '') {
+            return(
+                <div class="main">
+                    <div class="text-center">
+                        <h1>Error Loading Contents</h1>
+                        <div class="alert alert-danger" role="alert">
+                            <strong>Oh snap!</strong> {this.state.status}
+                        </div>
+                        <p>To know more contact Admin</p>
+                        <a href="https://tdshivendran.github.io/aboutme/" target="_blank" class="btn btn-outline-secondary" type="button" rel="noopener noreferrer">
+                            Admin
+                        </a>
+                    </div>
+                </div>
+            )
+        }
         else {
-            let searchImages = this.props.items.filter(
+            let searchImages = this.state.items.filter(
                 (imagelist) => {
                     return imagelist.commonName.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1;
                 }
             );
             return (
-                <div>
+                <div class="imageWrap">
                     {this.state.showOverlay}
                     <div class="container text-center">
                         <h1>Simple Image Gallery</h1>
@@ -117,7 +145,7 @@ class ViewImages extends React.Component{
                                     <p class="container" id="viewName">{list.commonName}</p>
                                     <button onClick={this.viewPicture.bind(this, list.imageURL, list.commonName, list.id)} title="View Photo" id="viewButton" class="btn btn-light">View</button>
                                     <button onClick={this.handleClickDeletePhoto.bind(this, list.id)} title="Delete Photo" id="deleteButton" class="btn btn-light"><i class="fas fa-trash-alt"></i></button>
-                                    <img class="img align-bottom" onError={this.onError.bind(this)} src={list.imageURL} alt="Card image cap"></img>
+                                    <img class="img align-bottom" onError={this.onError.bind(this)} src={list.imageURL} alt={"Image "+list.commonName+" is unavailable"}></img>
                                 </div>
                             </li>
                         ))}

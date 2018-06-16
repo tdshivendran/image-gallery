@@ -1,8 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import registerServiceWorker from './registerServiceWorker';
+import MainPage from './mainpage';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+class App extends React.Component {
+    render() {
+        return (
+            <div>
+                <MainPage/>
+            </div>
+        );
+    }
+}
+
+ReactDOM.render(<App/>, document.getElementById('root'));
 registerServiceWorker();

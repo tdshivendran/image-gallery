@@ -1,36 +1,14 @@
-import React from "react";
-import ViewImages from './ViewImages';
 
-class FetchContent extends React.Component{
-    constructor(props){
-        super(props);
-        this.componentDidMount=this.componentDidMount.bind(this);
-        this.state={
-            status:'',
-            items:''
-        }
-    }
-    componentDidMount(){
-        let url = process.env.REACT_APP_API_URL + "Animal/List?candidateID=" + process.env.REACT_APP_API_ID
-        fetch(url).then(function(res){
-            return res.json();
-        }).then(function (data) {
-            this.setState(
-                {status:data.status, items:data.list}
-            );
-        }.bind(this));
-    }
-
-    render(){
-        return(
-            <div>
-                <ViewImages
-                    items={this.state.items}
-                />
-            </div>
-        );
-    }
+async function FetchContent(){
+    let url = process.env.REACT_APP_API_URL + "Animal/List?candidateID=" + process.env.REACT_APP_API_ID;
+    let items = await fetch(url).then(function(res){
+        return res.json();
+    }).then(function (data) {
+        return data;
+    }).catch(function(error){
+        return 'error';
+    });
+    return items;
 }
 
 export default FetchContent;
-
