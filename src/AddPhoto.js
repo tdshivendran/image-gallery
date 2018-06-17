@@ -1,4 +1,6 @@
 import React from 'react';
+import {AddContent} from "./FetchAPI";
+import imageList from "./index";
 
 class AddPhoto extends React.Component {
     constructor(props) {
@@ -14,7 +16,9 @@ class AddPhoto extends React.Component {
             scientificName:'null',
             family:'null',
             imageURL:'',
-            status:''
+            status:'',
+            resChk: false,
+            newID:'',
         };
     }
     handleChangeName(e) {
@@ -39,11 +43,23 @@ class AddPhoto extends React.Component {
 
     handleSubmit(){
         if(this.state.imageURL === ''){
-            this.setState({status:"Please enter ImageURL"})
+            this.setState({
+                status:[
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Info!</strong> Image URL should not be blank. Please enter valid image URL.
+                    </div>
+                ]
+            })
         }
 
         if(this.state.commonName === ''){
-            this.setState({status:"Please enter Name"})
+            this.setState({
+                status:[
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Info!</strong> Name should not be blank. Please enter a Name.
+                    </div>
+                ]
+            })
         }
 
         if(this.state.imageURL !== '' && this.state.commonName !== ''){
@@ -62,61 +78,84 @@ class AddPhoto extends React.Component {
             }
             formBody = formBody.join("&");
 
-            let createURL = process.env.REACT_APP_API_URL + "Animal/Create?CandidateID=" + process.env.REACT_APP_API_ID;
-            fetch(createURL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-                },
-                body: formBody
-            }).then(function(result){
-                return result.json();
-            }).then(function(response){
-                if (response.status === 'OK'){
-                    this.setState({status:"Image successfully added. Please refresh the page."})
+            let response=AddContent(formBody);
+            response.then(function(data) {
+                if(data !== 'error'){
+                    if(data.status === 'OK'){
+                        this.setState({
+                            status:[
+                                <div class="alert alert-success" role="alert">
+                                    <strong>Success!</strong> Image uploaded successfully.
+                                </div>
+                            ],
+                            newID: data.id,
+                            resChk: true
+                        });
+                    }
+                    else {
+                        this.setState({
+                            status:[
+                                <div class="alert alert-danger" role="alert">
+                                    <strong>Alert!</strong> {data.status}
+                                </div>
+                            ]
+                        });
+                    }
                 }
-                else {
-                    this.setState({status:response.status})
-                }
-            }.bind(this)).catch(function(error){
-                this.setState({status: "Upload unsuccessful." +
-                    "\nLink might be broken, removed or expired." +
-                    "\nCheck if the link is working properly and try again"})
-
+                else{
+                    this.setState({
+                        status:[
+                            <div class="alert alert-danger" role="alert">
+                                <strong>Alert!</strong> Upload unsuccessful. Link might be broken, removed or expired. Check if the link is working properly and try again.
+                            </div>
+                        ]
+                    })
+                    }
             }.bind(this));
         }
     }
 
-
     render(){
-        return(
-            <div>
-                <h2 class="text-center">Add images of the animals using URL's</h2>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label>Name *</label>
-                        <input type="text" class="form-control" onChange={this.handleChangeName} placeholder="Ex: Cat, Dog, etc." required></input>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label>Scientific Name</label>
-                        <input type="text" class="form-control" onChange={this.handleChangeScientificName} placeholder="Scientific name of the animal"></input>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label>Family</label>
-                        <input type="text" class="form-control" onChange={this.handleChangefamily}  placeholder="Ex: Domestic, Wild, etc."></input>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Image URL *</label>
-                    <input type="text" class="form-control" onChange={this.handleChangeURL}  placeholder="Enter a valid image URL here" required></input>
-                </div>
+        if(this.state.resChk){
+            imageList.push({id: this.state.newID, commonName:this.state.commonName, imageURL: this.state.imageURL});
+            return(
                 <div class="text-center">
-                    <button onClick={this.handleSubmit} class="btn btn-primary">Add</button>
+                    <h2 class="text-center">Add images of the animals using URL's</h2>
+                    <br/>
+                    {this.state.status}
                 </div>
-                <br/>
-                <p class="text-center text-muted">{this.state.status}</p>
-            </div>
-        );
+            );
+        }
+        else{
+            return(
+                <div>
+                    <h2 class="text-center">Add images of the animals using URL's</h2>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label>Name *</label>
+                            <input type="text" class="form-control" onChange={this.handleChangeName} placeholder="Ex: Cat, Dog, etc." required></input>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Scientific Name</label>
+                            <input type="text" class="form-control" onChange={this.handleChangeScientificName} placeholder="Scientific name of the animal"></input>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Family</label>
+                            <input type="text" class="form-control" onChange={this.handleChangefamily}  placeholder="Ex: Domestic, Wild, etc."></input>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Image URL *</label>
+                        <input type="text" class="form-control" onChange={this.handleChangeURL}  placeholder="Enter a valid image URL here" required></input>
+                    </div>
+                    <div class="text-center">
+                        <button onClick={this.handleSubmit} class="btn btn-primary">Add</button>
+                    </div>
+                    <br/>
+                    <span class="text-center">{this.state.status}</span>
+                </div>
+            );
+        }
     }
 }
 
