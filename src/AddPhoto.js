@@ -13,8 +13,8 @@ class AddPhoto extends React.Component {
 
         this.state = {
             commonName:'',
-            scientificName:'null',
-            family:'null',
+            scientificName:'',
+            family:'',
             imageURL:'',
             status:'',
             resChk: false,

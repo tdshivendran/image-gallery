@@ -32,8 +32,8 @@ export async function AddContent(formbody){
 }
 
 export async function DeleteContent(formbody,auth_ID){
-    let createURL = process.env.REACT_APP_API_URL + "Animal/Delete?CandidateID=" + auth_ID;
-    let response = await fetch(createURL, {
+    let deleteURL = process.env.REACT_APP_API_URL + "Animal/Delete?CandidateID=" + auth_ID;
+    let response = await fetch(deleteURL, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -43,6 +43,19 @@ export async function DeleteContent(formbody,auth_ID){
         return result.json();
     }).then(function(response){
         return response;
+    }).catch(function(error){
+        console.log(error);
+        return 'error';
+    });
+    return response;
+}
+
+export async function infoContent(imgID){
+    let infoURL = process.env.REACT_APP_API_URL + "Animal/id/" + imgID + "?CandidateID=" + process.env.REACT_APP_API_ID;
+    let response = await fetch(infoURL).then(function(res){
+        return res.json();
+    }).then(function (data) {
+        return data;
     }).catch(function(error){
         console.log(error);
         return 'error';

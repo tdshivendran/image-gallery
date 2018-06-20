@@ -2,6 +2,7 @@ import React from "react";
 import DeletePhoto from "./DeletePhoto";
 import imageList from "./index.js";
 import AddPhoto from "./AddPhoto";
+import ViewImage from "./ViewImage";
 
 class ImageGrid extends React.Component{
     constructor(props){
@@ -57,25 +58,18 @@ class ImageGrid extends React.Component{
             ]});
     }
 
-    onError(e) {
-        e.target.src="image-not-available.jpg";
-
-    }
-
     viewPicture(src,name,id) {
         this.setState({showOverlay: [
                 <div id="viewPicture">
                     <div onClick={this.onClickCloseOverlay} class="overlay"></div>
                     <div id="overlayContainer" class="container">
                         <div class="overlayContent">
-                            <label>
-                                <h3>{name}</h3>
-                                <p class="mutedText">Image ID:{id}</p>
-                            </label>
                             <button class="closeButton" onClick={this.onClickCloseOverlay}>&times;</button>
-                            <div id="viewPictureWrap" class="container">
-                                <img class="img-fluid" onError={this.onError.bind(this)} src={src} alt={"Image "+name+" is unavailable"}></img>
-                            </div>
+                            <ViewImage
+                                imgURL = {src}
+                                imgName = {name}
+                                imgID={id}
+                            />
                         </div>
                     </div>
                 </div>

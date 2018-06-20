@@ -8,6 +8,25 @@ body {
     z-index: 2;
 }
 
+.main {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+}
+
+.imageWrap {
+    padding:1rem 0 1rem 0;
+    z-index: 1;
+}
+
+#loadingSpinner{
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+
 .image-grid-container {
     margin-bottom: 2rem;
     margin-left: 5rem;
@@ -129,7 +148,7 @@ body {
     height: 100%;
 }
 
-#overlayContainer {
+#overlayContainer{
     position: fixed;
     background-color: white;
     top: 50%;
@@ -137,16 +156,12 @@ body {
     z-index: 4;
     transform: translate(-50%,-50%);
     -ms-transform: translate(-50%,-50%);
+    transition: width 0.5s ease;
 }
 
 .overlayContent {
-  padding: 2rem 0 2rem 0;
-}
-
-.imageWrap {
-  padding:1rem 0 1rem 0;
-  margin: 0 2rem 0 2rem;
-  z-index: 1;
+    position: relative;
+    margin: 2rem 0 2rem 0;
 }
 
 #viewPicture {
@@ -181,12 +196,16 @@ body {
     background: none;
 }
 
+#viewPicture .overlayContent {
+    padding: 1rem 0 1rem 0;
+}
+
 #viewPicture h3 {
     text-transform: capitalize;
 }
 
-#viewPicture .overlayContent {
-    padding: 1rem 0 1rem 0;
+.mutedText {
+    font-size: 0.8rem;
 }
 
 #viewPictureWrap {
@@ -195,6 +214,7 @@ body {
     margin: 0;
     padding: 0;
     text-align: center;
+    margin-bottom: 1rem;
 }
 
 #viewPictureWrap .img-fluid {
@@ -202,25 +222,18 @@ body {
     background-color: #ddd;
 }
 
-.mutedText {
-    font-size: 0.8rem;
+#viewFamily {
+    position: absolute;
+    left:0
+}
+
+#viewScientific {
+    position: absolute;
+    right:0
 }
 
 #DeletePhotoOverlay #overlayContainer{
     max-width: 35rem;
-}
-
-.main {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
-}
-
-#loadingSpinner{
-    font-size: 4rem;
-    margin-bottom: 1rem;
 }
 
 /*Extra small devices (portrait phones, less than 576px)*/
@@ -237,12 +250,25 @@ body {
     #viewName{
         font-size: 1.2rem;
     }
+
+    #viewFamily {
+        position: relative;
+    }
+
+    #viewScientific {
+        position: relative;
+    }
+
 }
 
 /*Small devices (landscape phones, 576px and up)*/
 @media (min-width: 576px) and (max-width: 767.98px) {
     .image-container {
         width: 50%;
+    }
+
+    #viewName{
+        font-size: 1rem;
     }
 }
 
