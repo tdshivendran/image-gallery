@@ -2,6 +2,21 @@ import React from 'react';
 import {AddContent} from "./FetchAPI";
 import imageList from "./index";
 
+/* Component : AddPhoto [Adds an image record into database.]
+ * Functionality: Read inputs from user -> Upload image information into the database and imagelist array -> Display success or error messages.
+ *
+ * This component will perform conditional rendering.
+ *  ** Renders input form and error messages while reading inputs.**
+ *  ** Renders success message when image is uploaded successfully. **
+ *
+ * Working of the component
+ *  ** Read inputs from user and check appropriate information is provided. **
+ *  ** When appropriate information is available, the data is encoded as a Uniform Resource Identifier component. **
+ *  ** After encoding into URI, the data is uploaded in the database using POST method. **
+ *  ** On successful upload, a new id is returned from the database. **
+ *  ** The new image ID, commonName and imageURL is added to the imagelist Array. **
+ *  ** When the imagelist is updated, imageGrid component is updated to display the new image. ** */
+
 class AddPhoto extends React.Component {
     constructor(props) {
         super(props);

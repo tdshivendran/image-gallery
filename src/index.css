@@ -8,6 +8,24 @@ body {
     z-index: 2;
 }
 
+a{
+    color: #28a745;
+}
+
+a:hover, a:active{
+    color: #28a745;
+    text-decoration:none;
+}
+
+#Nav-link:hover, #Nav-link:active{
+    color: #28a745;
+    text-decoration:none;
+}
+
+#Nav-link:focus {
+    text-decoration: none;
+}
+
 .main {
     position: fixed;
     top: 50%;
@@ -280,6 +298,12 @@ body {
 }
 
 /*Large devices (desktops, 992px and up)*/
-@media (min-width: 992px) and (max-width: 1199.98px) {
+@media (min-width: 992px) and (max-width: 1549.98px) {
 
+}
+/*Extra Large devices*/
+@media (min-width: 1550px){
+    .image-container {
+        width: 25%;
+    }
 }

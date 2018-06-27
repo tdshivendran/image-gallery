@@ -1,4 +1,9 @@
 
+/* Asynchronous funcyion  : fetchContent
+ * Functionality: Fetches image list from API. Logs errors in the console.
+ * Returns: JSON data from api (OR) 'error' if any error is encountered.
+ * Usage: <MainPage/> component. */
+
 export async function FetchContent(){
     let url = process.env.REACT_APP_API_URL + "Animal/List?candidateID=" + process.env.REACT_APP_API_ID;
     let contents = await fetch(url).then(function(res){
@@ -11,6 +16,11 @@ export async function FetchContent(){
     });
     return contents;
 }
+
+/* Asynchronous funcyion  : AddContent
+ * Functionality: POST new image information to the API. Logs errors in the console.
+ * Returns: JSON data from api (OR) 'error' if any error is encountered.
+ * Usage: <AddPhoto/> component. */
 
 export async function AddContent(formbody){
     let createURL = process.env.REACT_APP_API_URL + "Animal/Create?CandidateID=" + process.env.REACT_APP_API_ID;
@@ -31,6 +41,11 @@ export async function AddContent(formbody){
     return response;
 }
 
+/* Asynchronous funcyion  : DeleteContent
+ * Functionality: POST image ID to the API to be deleted. Logs errors in the console.
+ * Returns: JSON data from api (OR) 'error' if any error is encountered.
+ * Usage: <DeletePhoto/> component. */
+
 export async function DeleteContent(formbody,auth_ID){
     let deleteURL = process.env.REACT_APP_API_URL + "Animal/Delete?CandidateID=" + auth_ID;
     let response = await fetch(deleteURL, {
@@ -49,6 +64,11 @@ export async function DeleteContent(formbody,auth_ID){
     });
     return response;
 }
+
+/* Asynchronous funcyion  : infoContent
+ * Functionality: Fetches all information about an image. Logs errors in the console.
+ * Returns: JSON data from api (OR) 'error' if any error is encountered.
+ * Usage: <ViewImage/> component. */
 
 export async function infoContent(imgID){
     let infoURL = process.env.REACT_APP_API_URL + "Animal/id/" + imgID + "?CandidateID=" + process.env.REACT_APP_API_ID;

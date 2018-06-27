@@ -3,6 +3,19 @@ import ImageGrid from "./ImageGrid";
 import imageList from "./index";
 import {FetchContent} from "./FetchAPI";
 
+/* Component : Main Page.
+ * Functionality: Fetches images from API -> Loads Images into imagelist Array variable -> Display image grid using <ImageGrid/>
+ *
+ * This component will perform conditional rendering based on fetching the images.
+ *  ** Renders LOADING when images are being fetched. **
+ *  ** Renders IMAGE GRID after images are fetched. **
+ *  ** Renders Error PAGE if an error is encountered while fetching  **
+ *
+ * Working of the component
+ *  ** Fetches images from the api using GET. **
+ *  ** Loads images into an imagelist array and renders <ImageGrid/> component upon successful fetch. **
+ *  ** Appropriate error messages are displayed when the fetch encounters an error. ** */
+
 class MainPage extends React.Component {
     constructor(props){
         super(props);
@@ -52,9 +65,7 @@ class MainPage extends React.Component {
                             <strong>Oh snap!</strong> {this.state.status}
                         </div>
                         <p>To know more contact Admin</p>
-                        <a href="https://tdshivendran.github.io/aboutme/" target="_blank" class="btn btn-outline-secondary" type="button" rel="noopener noreferrer">
-                            Admin
-                        </a>
+                        <a href='mailto:tdshivendran@gmail.com?Subject=Image-gallery%20website%20error' type="button" class="btn btn-outline-secondary"  target="_top">Admin</a>
                     </div>
                 </div>
             )

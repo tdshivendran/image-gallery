@@ -1,6 +1,15 @@
 import React from "react";
 import {infoContent} from "./FetchAPI";
 
+/* Component : ViewImage [Displays a larger version of the image.]
+ * Functionality: Fetch image information using image ID -> Display image using image URL -> Displays the retrieved information about the image.
+ *
+ * Working of the component
+ *  ** All the information in about an image is fetched using GET. **
+ *  ** When image is being fetched, the image is displayed using image URL. **
+ *  ** On successful fetching of image information, component is updated to display the retrieved information. **
+ *  ** If the imageURL link is broken, the image is replaced with an error image ** */
+
 class ViewImage extends React.Component {
     constructor(props) {
         super(props);

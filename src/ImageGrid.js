@@ -4,6 +4,15 @@ import imageList from "./index.js";
 import AddPhoto from "./AddPhoto";
 import ViewImage from "./ViewImage";
 
+/* Component : Image Grid. ImageGrid displays a grid layout of images.
+ * Functionality: Fetches images from imagelist Array -> Displays grid layout of images.
+ * ** Perform search operation using Image CommonNames.
+ * ** Updates in the database (Add or delete content) is reflected in the imagelist array. This will automatically update the image grid.
+ *
+ * Other Functionality using other components
+ *  ** Displays an image clicked on view using <ViewImage/>.
+ *  ** Deletes an image by authenticating. <DeletePhoto/> */
+
 class ImageGrid extends React.Component{
     constructor(props){
         super(props);
@@ -115,7 +124,7 @@ class ImageGrid extends React.Component{
                 </div>
                 <br/>
                 <div class="container text-center">
-                    <p>To know more about this website, <a href="https://tdshivendran.github.io/aboutme/" target="_blank" rel="noopener noreferrer">contact developer</a></p>
+                    <p>To know more about this website, <a href="mailto:tdshivendran@gmail.com?Subject=More%20Information%20on%20image-gallery%20website" target="_top">contact developer</a></p>
                 </div>
             </div>
         );

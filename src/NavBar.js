@@ -1,5 +1,13 @@
 import React from "react";
 
+/* Component: NavBar.
+ * Tools - BOOTSTRAP, HTML, CSS
+ *
+ * Navbar that is used to navigate to different pages instantly.
+ * This is a responsive content and navigates to only two pages. source code and about developer page.
+ * Refreshes the application when clicked on brand name (Image Gallery).
+ * Built with bootstrap and added CSS*/
+
 class Navbar extends React.Component {
     render() {
         return (
@@ -12,7 +20,12 @@ class Navbar extends React.Component {
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
-                            <a href="https://tdshivendran.github.io/aboutme/" target="_blank" id="aboutButton" class="btn btn-outline-secondary" role="button" rel="noopener noreferrer">About Developer</a>
+                            <li class="nav-item active">
+                                <a id="Nav-link" class="nav-link" target="_blank" href="https://github.com/tdshivendran/image-gallery" rel="noopener noreferrer" >Source Code</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a id="Nav-link" class="nav-link" target="_blank" href="https://tdshivendran.github.io/aboutme/" rel="noopener noreferrer" >About Developer</a>
+                            </li>
                         </ul>
                     </div>
                 </nav>
