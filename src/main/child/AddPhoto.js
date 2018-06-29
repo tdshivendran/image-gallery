@@ -1,6 +1,6 @@
 import React from 'react';
-import {AddContent} from "./FetchAPI";
-import imageList from "./index";
+import {AddContent} from "../FetchAPI";
+import imageList from "../../index";
 
 /* Component : AddPhoto [Adds an image record into database.]
  * Functionality: Read inputs from user -> Upload image information into the database and imagelist array -> Display success or error messages.

@@ -1,5 +1,5 @@
 
-/* Asynchronous funcyion  : fetchContent
+/* Asynchronous function  : fetchContent
  * Functionality: Fetches image list from API. Logs errors in the console.
  * Returns: JSON data from api (OR) 'error' if any error is encountered.
  * Usage: <MainPage/> component. */
@@ -17,7 +17,7 @@ export async function FetchContent(){
     return contents;
 }
 
-/* Asynchronous funcyion  : AddContent
+/* Asynchronous function  : AddContent
  * Functionality: POST new image information to the API. Logs errors in the console.
  * Returns: JSON data from api (OR) 'error' if any error is encountered.
  * Usage: <AddPhoto/> component. */
@@ -41,7 +41,7 @@ export async function AddContent(formbody){
     return response;
 }
 
-/* Asynchronous funcyion  : DeleteContent
+/* Asynchronous function  : DeleteContent
  * Functionality: POST image ID to the API to be deleted. Logs errors in the console.
  * Returns: JSON data from api (OR) 'error' if any error is encountered.
  * Usage: <DeletePhoto/> component. */
@@ -65,7 +65,7 @@ export async function DeleteContent(formbody,auth_ID){
     return response;
 }
 
-/* Asynchronous funcyion  : infoContent
+/* Asynchronous function  : infoContent
  * Functionality: Fetches all information about an image. Logs errors in the console.
  * Returns: JSON data from api (OR) 'error' if any error is encountered.
  * Usage: <ViewImage/> component. */

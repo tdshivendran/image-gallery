@@ -1,6 +1,6 @@
 import React from 'react';
-import ImageGrid from "./ImageGrid";
-import imageList from "./index";
+import ImageGrid from "./child/ImageGrid";
+import imageList from "../index";
 import {FetchContent} from "./FetchAPI";
 
 /* Component : Main Page.

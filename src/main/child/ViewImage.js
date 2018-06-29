@@ -1,5 +1,5 @@
 import React from "react";
-import {infoContent} from "./FetchAPI";
+import {infoContent} from "../FetchAPI";
 
 /* Component : ViewImage [Displays a larger version of the image.]
  * Functionality: Fetch image information using image ID -> Display image using image URL -> Displays the retrieved information about the image.

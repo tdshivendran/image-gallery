@@ -1,6 +1,6 @@
 import React from "react";
-import {DeleteContent} from "./FetchAPI";
-import imageList from "./index";
+import {DeleteContent} from "../FetchAPI";
+import imageList from "../../index";
 
 
 /* Component : DeletePhoto [Deletes an image record in the database.]
@@ -11,12 +11,12 @@ import imageList from "./index";
  *  ** Renders success message when image record is deleted successfully. **
  *
  * Working of the component
- *  ** Read AUTH-ID from user and check appropriate information is provided. **
+ *  ** Read AUTH-ID from user and examine if appropriate information is provided. **
  *  ** When delete buttn is clicked, the image ID is encoded as a Uniform Resource Identifier component. **
  *  ** After encoding into URI, AUTH-ID is attached to the url and the data is sent to the API using POST method. **
  *  ** If AUTH-ID is validated by the database, image record is successfully deleted. Or an appropriate error message is displayed. **
  *  ** On successful deletion, the deleted image is removed from imagelist Array using the imageID. **
- *  ** When the imagelist is updated, imageGrid component is updated to display the updated imageList. ** */
+ *  ** When the imagelist is updated, imageGrid component is updated to display the updated contents. ** */
 
 class DeletePhoto extends React.Component {
     constructor(props) {

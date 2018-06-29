@@ -1,6 +1,6 @@
 import React from "react";
 import DeletePhoto from "./DeletePhoto";
-import imageList from "./index.js";
+import imageList from "../../index.js";
 import AddPhoto from "./AddPhoto";
 import ViewImage from "./ViewImage";
 
